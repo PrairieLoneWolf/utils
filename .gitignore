@@ -1,7 +1,4 @@
-junit-4.7.jar
-out/production
-out/test
+target/
+src/test/resource/temp/
 .idea/
 utils.iml
-.gitignore
-Junit/Resource/temp/

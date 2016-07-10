@@ -1,3 +1,8 @@
+#maven deploy
+    2016-05-12 成功发布至maven中心仓库
+    release 1.0.0
+
+
 #DateUtil
 
     
@@ -11,7 +16,9 @@
 #RegUtil
     RegUtil.countSubStrReg
     原函数有BUG导致统计数据的错误
-    
+
+#ValidUtil
+    该工具类作为一些简单的校验，因此使用的比较多,因此命名越简单越好！因此重名为valid
     
 #brach
     release1
