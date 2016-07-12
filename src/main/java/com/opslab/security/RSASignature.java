@@ -1,6 +1,6 @@
 package com.opslab.security;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
+import org.apache.commons.net.util.Base64;
 
 import java.security.KeyFactory;
 import java.security.PrivateKey;
@@ -32,7 +32,7 @@ public class RSASignature {
      */
     public static String sign(String content, String privateKey, String encode) {
         try {
-            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(Base64.decode(privateKey));
+            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(Base64.decodeBase64(privateKey));
             KeyFactory factory = KeyFactory.getInstance(ALGORITHM);
             PrivateKey priKey = factory.generatePrivate(keySpec);
 
@@ -42,7 +42,7 @@ public class RSASignature {
             signature.update(content.getBytes(encode));
 
             byte[] signed = signature.sign();
-            return Base64.encode(signed);
+            return Base64.encodeBase64String(signed);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class RSASignature {
      */
     public static boolean verify(String content, String publicKey, String encode, String sign) {
         try {
-            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Base64.decode(publicKey));
+            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Base64.decodeBase64(publicKey));
             KeyFactory factory = KeyFactory.getInstance(ALGORITHM);
             PublicKey pubKey = factory.generatePublic(keySpec);
 
@@ -70,7 +70,7 @@ public class RSASignature {
             signature.initVerify(pubKey);
             signature.update(content.getBytes(encode));
 
-            return signature.verify(Base64.decode(sign));
+            return signature.verify(Base64.decodeBase64(sign));
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);

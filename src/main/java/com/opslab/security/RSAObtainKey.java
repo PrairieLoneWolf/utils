@@ -1,6 +1,6 @@
 package com.opslab.security;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
+import org.apache.commons.net.util.Base64;
 
 import java.io.*;
 import java.security.*;
@@ -53,7 +53,7 @@ public class RSAObtainKey {
      */
     public static RSAPublicKey loadPublicKeyByStr(String publicKeyStr) throws Exception {
         try {
-            byte[] buffer = Base64.decode(publicKeyStr);
+            byte[] buffer = Base64.decodeBase64(publicKeyStr);
             KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(buffer);
             return (RSAPublicKey) keyFactory.generatePublic(keySpec);
@@ -82,7 +82,7 @@ public class RSAObtainKey {
         while ((ch = inStream.read()) != -1) {
             out.write(ch);
         }
-        return Base64.encode(out.toByteArray());
+        return Base64.encodeBase64String(out.toByteArray());
     }
 
     /**
@@ -118,7 +118,7 @@ public class RSAObtainKey {
     public static RSAPrivateKey loadPrivateKeyByStr(String privateKeyStr)
             throws Exception {
         try {
-            byte[] buffer = Base64.decode(privateKeyStr);
+            byte[] buffer = Base64.decodeBase64(privateKeyStr);
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(buffer);
             KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
             return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);

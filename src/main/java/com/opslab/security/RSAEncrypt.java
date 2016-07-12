@@ -1,6 +1,6 @@
 package com.opslab.security;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
+import org.apache.commons.net.util.Base64;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -50,7 +50,7 @@ public class RSAEncrypt {
             cipher = Cipher.getInstance(ALGORITHM);
             cipher.init(Cipher.ENCRYPT_MODE, key);
             byte[] splitData = splitData(plainTextData, cipher, MAX_ENCRYPT_BLOCK);
-            return Base64.encode(splitData);
+            return Base64.encodeBase64String(splitData);
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("无此加密算法");
         } catch (NoSuchPaddingException e) {
@@ -82,7 +82,7 @@ public class RSAEncrypt {
         try {
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             cipher.init(Cipher.DECRYPT_MODE, key);
-            byte[] data = Base64.decode(content);
+            byte[] data = Base64.decodeBase64(content);
             byte[] splitData = splitData(data, cipher, MAX_DECRYPT_BLOCK);
             return new String(splitData, encode);
         } catch (NoSuchAlgorithmException e) {
